@@ -10,7 +10,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Create(appName string, fun func()) {
+func Create(fun func()) {
+	appName := getSelfFileName()
+	//fmt.Println("Executor:", appName)
 	var daemon bool
 	var cmdStart = &cobra.Command{
 		Use:   "start",
@@ -77,6 +79,19 @@ func Create(appName string, fun func()) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func getSelfFileName() string {
+	fullPath, err := exec.LookPath(os.Args[0])
+	if err != nil {
+		panic(err)
+	}
+	var sep = "/"
+	if strings.Contains(fullPath, "\\") {
+		sep = "\\"
+	}
+	list := strings.Split(fullPath, sep)
+	return list[len(list)-1]
 }
 
 func getPid(appName string) string {
