@@ -11,7 +11,7 @@ import (
 )
 
 func Create(fun func()) {
-	appName := getSelfFileName()
+	appName := GetSelfFileName()
 	//fmt.Println("Executor:", appName)
 	var daemon bool
 	var cmdStart = &cobra.Command{
@@ -81,7 +81,7 @@ func Create(fun func()) {
 	}
 }
 
-func getSelfFileName() string {
+func GetSelfFileName() string {
 	fullPath, err := exec.LookPath(os.Args[0])
 	if err != nil {
 		panic(err)
